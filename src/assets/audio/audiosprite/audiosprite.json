@@ -1,0 +1,135 @@
+{
+  "resources": [
+    "audiosprite.ogg",
+    "audiosprite.m4a",
+    "audiosprite.mp3",
+    "audiosprite.ac3"
+  ],
+  "spritemap": {
+    "1": {
+      "start": 0,
+      "end": 0.9824943310657597,
+      "loop": false
+    },
+    "2": {
+      "start": 5,
+      "end": 5.927346938775511,
+      "loop": false
+    },
+    "3": {
+      "start": 7,
+      "end": 8.008616780045351,
+      "loop": false
+    },
+    "4": {
+      "start": 10,
+      "end": 11.084081632653062,
+      "loop": false
+    },
+    "5": {
+      "start": 13,
+      "end": 14.133424036281179,
+      "loop": false
+    },
+    "6": {
+      "start": 16,
+      "end": 17.11310657596372,
+      "loop": false
+    },
+    "7": {
+      "start": 19,
+      "end": 20.176961451247166,
+      "loop": false
+    },
+    "8": {
+      "start": 22,
+      "end": 22.77641723356009,
+      "loop": false
+    },
+    "9": {
+      "start": 24,
+      "end": 25.04344671201814,
+      "loop": false
+    },
+    "10": {
+      "start": 2,
+      "end": 3.0434467120181408,
+      "loop": false
+    },
+    "beltHandle1": {
+      "start": 27,
+      "end": 27.286666666666665,
+      "loop": false
+    },
+    "beltHandle2": {
+      "start": 29,
+      "end": 29.486666666666668,
+      "loop": false
+    },
+    "bookFlip1": {
+      "start": 31,
+      "end": 31.77734693877551,
+      "loop": false
+    },
+    "bookFlip2": {
+      "start": 33,
+      "end": 33.44931972789116,
+      "loop": false
+    },
+    "bookFlip3": {
+      "start": 35,
+      "end": 35.23598639455782,
+      "loop": false
+    },
+    "fight": {
+      "start": 37,
+      "end": 37.93315192743764,
+      "loop": false
+    },
+    "it's_a_tie": {
+      "start": 39,
+      "end": 40.34820861678004,
+      "loop": false
+    },
+    "switch20": {
+      "start": 42,
+      "end": 42.364263038548756,
+      "loop": false
+    },
+    "switch22": {
+      "start": 44,
+      "end": 44.370068027210884,
+      "loop": false
+    },
+    "switch23": {
+      "start": 46,
+      "end": 46.399092970521544,
+      "loop": false
+    },
+    "sword1": {
+      "start": 48,
+      "end": 49.028934240362815,
+      "loop": false
+    },
+    "tie_breaker": {
+      "start": 51,
+      "end": 52.36562358276644,
+      "loop": false
+    },
+    "time": {
+      "start": 54,
+      "end": 55.176961451247166,
+      "loop": false
+    },
+    "you_lose": {
+      "start": 57,
+      "end": 58.397551020408166,
+      "loop": false
+    },
+    "you_win": {
+      "start": 60,
+      "end": 61.26984126984127,
+      "loop": false
+    }
+  }
+}
