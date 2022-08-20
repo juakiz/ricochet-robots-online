@@ -212,8 +212,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">board/L shape wall.png</key>
-            <key type="filename">board/ricochet_board_0002_L-shape-wall.png</key>
+            <key type="filename">board/board_center.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -222,29 +221,12 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>36,36,72,72</rect>
+                <rect>64,64,128,128</rect>
                 <key>scale9Paddings</key>
-                <rect>36,36,72,72</rect>
+                <rect>64,64,128,128</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">board/Piece Limits 1.png</key>
-            <key type="filename">board/ricochet_board_0001_Piece-Limits-1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>28,28,57,56</rect>
-                <key>scale9Paddings</key>
-                <rect>28,28,57,56</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">board/Symbol limits.png</key>
             <key type="filename">board/ricochet_board_0000_Symbol-limits.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -260,8 +242,37 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">board/ricochet_board_0001_Piece-Limits-1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>28,28,57,56</rect>
+                <key>scale9Paddings</key>
+                <rect>28,28,57,56</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">board/ricochet_board_0002_L-shape-wall.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,18,36,36</rect>
+                <key>scale9Paddings</key>
+                <rect>18,18,36,36</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">board/ricochet_board_0003_tile.png</key>
-            <key type="filename">board/tile.png</key>
             <key type="filename">menu/dungeon_tile.jpg</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -307,7 +318,17 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">board/ricochet_board_0006_board-center.png</key>
+            <key type="filename">board/slices/gem-star-blue.png</key>
+            <key type="filename">board/slices/gem-star-green.png</key>
+            <key type="filename">board/slices/gem-triangle-blue.png</key>
+            <key type="filename">board/slices/piece-blue.png</key>
+            <key type="filename">board/slices/piece-cyan.png</key>
+            <key type="filename">board/slices/piece-green.png</key>
+            <key type="filename">board/slices/piece-red.png</key>
+            <key type="filename">board/slices/piece-white.png</key>
+            <key type="filename">board/slices/piece-yellow.png</key>
+            <key type="filename">board/slices/tile.png</key>
+            <key type="filename">board/slices/wall-l.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -316,9 +337,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>64,64,128,128</rect>
+                <rect>21,21,41,41</rect>
                 <key>scale9Paddings</key>
-                <rect>64,64,128,128</rect>
+                <rect>21,21,41,41</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

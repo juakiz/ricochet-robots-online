@@ -20,15 +20,17 @@ const config = {
   autoresize: true,
   scale: {
     mode: Phaser.Scale.RESIZE,
-    // parent: 'phaser-example',
+    parent: 'phaser-example',
     // autoCenter: Phaser.Scale.CENTER_BOTH,
     // width: gameHeight,//window.innerWidth / ratio,//"100%",
     // height: 640,//"100%",
+    // width: 1048,
+    // height: 1048,
   },
   dom: {
     createContainer: true,
   },
-  pixelArt: /* false,// */true,
+  pixelArt: false,//true,
   scene: [
     Preloader,
     Menu,

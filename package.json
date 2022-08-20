@@ -1,7 +1,7 @@
 {
-  "name": "imbawar",
+  "name": "ricochet-robots",
   "version": "1.0.0",
-  "description": "A balanced game by Juakiz",
+  "description": "Ricochet Robots Online",
   "main": "server.js",
   "scripts": {
     "start": "pm2 start ./src/server/server.js --watch && pm2 log",

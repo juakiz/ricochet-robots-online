@@ -39,6 +39,7 @@ export default class MainContainer extends Phaser.GameObjects.Container {
   refreshSizes() {
     this.REAL_WIDTH = window.innerWidth;
     this.REAL_HEIGHT = window.innerHeight;
+    console.log(window.innerWidth, window.innerHeight)
     const scale = {
       x: this.REAL_WIDTH / this.INNER_WIDTH,
       y: this.REAL_HEIGHT / this.INNER_HEIGHT
