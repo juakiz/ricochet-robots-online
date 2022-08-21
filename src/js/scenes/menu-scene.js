@@ -1,3 +1,5 @@
+// TODO: Refactor all the DRY
+
 // import MenuMain from './menu/menu-main';
 
 import { gameInfo } from "./system/game-info";
@@ -52,7 +54,7 @@ class Board extends Phaser.GameObjects.Container {
     this.add(boardCenter);
 
     this.createTiles();
-
+    this.createBorders();
     this.placeRandomStuff();
   }
 
@@ -74,6 +76,32 @@ class Board extends Phaser.GameObjects.Container {
     });
   }
 
+  createBorders() {
+    const halfBoardWidth = this.boardImg.displayWidth * 0.5,
+    halfBoardHeight = this.boardImg.displayHeight * 0.5,
+    halfTileSize = gameInfo.TILE_SIZE * 0.5;
+  let spr, row, col;
+  gameInfo.BOARD_SETUP.forEach((el, i, arr) => {
+    col = i % 16, row = Math.floor(i / 16);
+    if (col === 0 || col === 15) {
+      spr = this.scene.add.sprite(0, 0, 'bg_atlas', 'slices/wall-i.png');
+      spr.setOrigin(0.5, 0.5);
+      spr.x = gameInfo.BOARD_PADDING + col * gameInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
+      spr.y = gameInfo.BOARD_PADDING + row * gameInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
+      spr.rotation = col === 0 ? Math.PI : Math.PI * 2;
+      this.add(spr);
+    }
+    if (row === 0 || row === 15) {
+      spr = this.scene.add.sprite(0, 0, 'bg_atlas', 'slices/wall-i.png');
+      spr.setOrigin(0.5, 0.5);
+      spr.x = gameInfo.BOARD_PADDING + col * gameInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
+      spr.y = gameInfo.BOARD_PADDING + row * gameInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
+      spr.rotation = row === 0 ? Math.PI * 1.5 : Math.PI * 0.5;
+      this.add(spr);
+    }
+  });
+  }
+
   placeRandomStuff() {
     const halfBoardWidth = this.boardImg.displayWidth * 0.5,
       halfBoardHeight = this.boardImg.displayHeight * 0.5,
@@ -86,7 +114,7 @@ class Board extends Phaser.GameObjects.Container {
       spr.setOrigin(0.5, 0.5);
       spr.x = gameInfo.BOARD_PADDING + col * gameInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
       spr.y = gameInfo.BOARD_PADDING + row * gameInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
-      spr.rotation = Math.PI * (rot / 2)
+      spr.rotation = Math.PI * (rot / 2);
       this.add(spr);
     });
 
@@ -111,18 +139,3 @@ class Board extends Phaser.GameObjects.Container {
     });
   }
 }
-
-
-// PIECES: [
-//   [9, 4, 0],// BLUE
-//   [5, 9, 1],// GREEN
-//   [6, 14, 2],// YELLOW
-//   [9, 15, 3],// RED
-//   [13, 0, 3],// WHITE
-// ],
-
-// GEMS: [
-//   [3, 6, 0, 0], // STAR, BLUE
-//   [10, 12, 1, 0], // TRIANGLE, BLUE
-//   [11, 10, 0, 1], // STAR, GREEN
-// ]

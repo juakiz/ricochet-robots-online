@@ -328,6 +328,7 @@
             <key type="filename">board/slices/piece-white.png</key>
             <key type="filename">board/slices/piece-yellow.png</key>
             <key type="filename">board/slices/tile.png</key>
+            <key type="filename">board/slices/wall-i.png</key>
             <key type="filename">board/slices/wall-l.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
