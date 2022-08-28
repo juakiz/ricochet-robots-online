@@ -318,9 +318,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">board/slices/gem-moon-blue.png</key>
+            <key type="filename">board/slices/gem-moon-green.png</key>
+            <key type="filename">board/slices/gem-moon-red.png</key>
+            <key type="filename">board/slices/gem-moon-yellow.png</key>
+            <key type="filename">board/slices/gem-planet-blue.png</key>
+            <key type="filename">board/slices/gem-planet-green.png</key>
+            <key type="filename">board/slices/gem-planet-red.png</key>
+            <key type="filename">board/slices/gem-planet-yellow.png</key>
+            <key type="filename">board/slices/gem-spiral-rainbow.png</key>
             <key type="filename">board/slices/gem-star-blue.png</key>
             <key type="filename">board/slices/gem-star-green.png</key>
-            <key type="filename">board/slices/gem-triangle-blue.png</key>
+            <key type="filename">board/slices/gem-star-red.png</key>
+            <key type="filename">board/slices/gem-star-yellow.png</key>
+            <key type="filename">board/slices/gem-sun-blue.png</key>
+            <key type="filename">board/slices/gem-sun-green.png</key>
+            <key type="filename">board/slices/gem-sun-red.png</key>
+            <key type="filename">board/slices/gem-sun-yellow.png</key>
             <key type="filename">board/slices/piece-blue.png</key>
             <key type="filename">board/slices/piece-cyan.png</key>
             <key type="filename">board/slices/piece-green.png</key>

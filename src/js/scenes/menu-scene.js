@@ -55,7 +55,7 @@ class Board extends Phaser.GameObjects.Container {
 
     this.createTiles();
     this.createBorders();
-    this.placeRandomStuff();
+    this.placeExampleSetup();
   }
 
   createTiles() {
@@ -102,11 +102,22 @@ class Board extends Phaser.GameObjects.Container {
   });
   }
 
-  placeRandomStuff() {
+  placeExampleSetup() {
     const halfBoardWidth = this.boardImg.displayWidth * 0.5,
       halfBoardHeight = this.boardImg.displayHeight * 0.5,
       halfTileSize = gameInfo.TILE_SIZE * 0.5;
     let spr, row, col, rot, color, form;
+
+    gameInfo.GAME_EXAMPLE_POSITIONS.GEMS.forEach((el, i, arr) => {
+      col = el[0], row = el[1], color = el[2], form = el[3];
+
+      spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/gem-${gameInfo.SHAPE_DEFS[form]}-${gameInfo.COLOR_DEFS[color]}.png`);
+      spr.setOrigin(0.5, 0.5);
+      spr.x = gameInfo.BOARD_PADDING + col * gameInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
+      spr.y = gameInfo.BOARD_PADDING + row * gameInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
+      this.add(spr);
+    });
+
     gameInfo.GAME_EXAMPLE_POSITIONS.WALLS.forEach((el, i, arr) => {
       col = el[0], row = el[1], rot = el[2];
 
@@ -117,25 +128,36 @@ class Board extends Phaser.GameObjects.Container {
       spr.rotation = Math.PI * (rot / 2);
       this.add(spr);
     });
-
+    
     gameInfo.GAME_EXAMPLE_POSITIONS.PIECES.forEach((el, i, arr) => {
       col = el[0], row = el[1], color = el[2];
 
-      spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/piece-${gameInfo.PIECE_DEFS[color]}.png`);
+      spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/piece-${gameInfo.COLOR_DEFS[color]}.png`).setInteractive();
       spr.setOrigin(0.5, 0.5);
       spr.x = gameInfo.BOARD_PADDING + col * gameInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
       spr.y = gameInfo.BOARD_PADDING + row * gameInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
       this.add(spr);
+
+      this.scene.input.setDraggable(spr);
+      spr._dragStartPos = new Phaser.Math.Vector2();
     });
 
-    gameInfo.GAME_EXAMPLE_POSITIONS.GEMS.forEach((el, i, arr) => {
-      col = el[0], row = el[1], color = el[2], form = el[3];
+    this.scene.input.dragDistanceThreshold = 10;
+    this.scene.input.on('dragstart', this.onDragStart, this);
+    this.scene.input.on('drag', this.onDrag, this);
+    this.scene.input.on('dragend', this.onDrageEnd, this);
+  }
 
-      spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/gem-${gameInfo.GEM_DEFS[form]}-${gameInfo.PIECE_DEFS[color]}.png`);
-      spr.setOrigin(0.5, 0.5);
-      spr.x = gameInfo.BOARD_PADDING + col * gameInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
-      spr.y = gameInfo.BOARD_PADDING + row * gameInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
-      this.add(spr);
-    });
+  onDragStart(pointer, gameObject) {
+    gameObject._dragStartPos.set(gameObject.x, gameObject.y);
+  }
+
+  onDrag(pointer, gameObject, dragX, dragY) {
+    gameObject.x = dragX;
+    gameObject.y = dragY;
+  }
+
+  onDrageEnd(pointer, gameObject) {
+    gameObject.setPosition(gameObject._dragStartPos.x, gameObject._dragStartPos.y);
   }
 }

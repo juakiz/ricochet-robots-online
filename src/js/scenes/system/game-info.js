@@ -20,17 +20,21 @@ export const gameInfo = {
   BOARD_PADDING: 12,
   TILE_SIZE: 64,
 
-  PIECE_DEFS: [
+  COLOR_DEFS: [
     'blue',
     'green',
     'yellow',
     'red',
     'white',
+    'rainbow',
   ],
 
-  GEM_DEFS: [
+  SHAPE_DEFS: [
     'star',
-    'triangle',
+    'sun',
+    'moon',
+    'planet',
+    'spiral',
   ],
 
   GAME_EXAMPLE_POSITIONS: {
@@ -76,9 +80,26 @@ export const gameInfo = {
     ],
 
     GEMS: [
-      [3, 6, 0, 0], // STAR, BLUE
-      [10, 12, 1, 0], // TRIANGLE, BLUE
-      [11, 10, 0, 1], // STAR, GREEN
+      [4, 1, 1, 2], // GREEN, MOON
+      [1, 3, 3, 1], // RED, SUN
+      [5, 5, 2, 3], // YELLOW, PLANET
+      [3, 6, 0, 0], // BLUE, STAR
+
+      [11, 1, 3, 2], // RED, MOON
+      [14, 3, 1, 1], // GREEN, SUN
+      [9, 4, 0, 3], // BLUE, PLANET
+      [12, 6, 2, 0], // YELLOW, STAR
+
+      [2, 8, 5, 4], // RAINBOW, SPIRAL
+      [5, 9, 1, 3], // GREEN, PLANET
+      [1, 10, 0, 2], // BLUE, MOON
+      [4, 12, 3, 0], // RED, STAR
+      [6, 14, 2, 1], // YELLOW, SUN
+
+      [10, 12, 0, 1], // BLUE, TRIANGLE
+      [13, 11, 3, 3], // RED, PLANET
+      [11, 10, 1, 0], // GREEN, STAR
+      [12, 13, 2, 2], // YELLOW, MOON
     ]
   },
 };
