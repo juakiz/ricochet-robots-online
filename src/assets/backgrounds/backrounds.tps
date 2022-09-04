@@ -336,10 +336,9 @@
             <key type="filename">board/slices/gem-sun-red.png</key>
             <key type="filename">board/slices/gem-sun-yellow.png</key>
             <key type="filename">board/slices/piece-blue.png</key>
-            <key type="filename">board/slices/piece-cyan.png</key>
             <key type="filename">board/slices/piece-green.png</key>
             <key type="filename">board/slices/piece-red.png</key>
-            <key type="filename">board/slices/piece-white.png</key>
+            <key type="filename">board/slices/piece-silver.png</key>
             <key type="filename">board/slices/piece-yellow.png</key>
             <key type="filename">board/slices/tile.png</key>
             <key type="filename">board/slices/wall-i.png</key>
