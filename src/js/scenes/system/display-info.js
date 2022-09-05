@@ -1,3 +1,8 @@
+import { board } from "./rules";
+const binaryBoard = board.map(el=>parseInt(el.toString(2)))
+console.log(binaryBoard);
+
+
 export const displayInfo = {
   // BOARD_SETUP: [
   //   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
