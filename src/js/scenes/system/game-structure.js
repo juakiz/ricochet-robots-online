@@ -125,16 +125,6 @@ function getIndex(x, y) {
 }
 
 function rotateMatrix(matrix, clockwise) {
-  // const rotatedMatrix = [];
-  // const n = matrix.length;
-  // for (let i = 0; i < n; ++i) {
-  //   rotatedMatrix[i] = [];
-  //   for (let j = 0; j < n; ++j) {
-  //     // Fix this because we use one dimensional arrays
-  //     if (clockwise) rotatedMatrix[i][j] = matrix[n - j - 1][i];
-  //     else rotatedMatrix[i][j] = matrix[j][n - i - 1];
-  //   }
-  // }
   const rotatedMatrix = [];
   const n = 8;
     for (let i = 0; i < 64; i++) {
@@ -175,8 +165,7 @@ export function getBoard(parts) {
   const upLeft = parts[0].slice();
   const upRight = rotateMatrix(parts[1]);
   const downLeft = rotateMatrix(parts[2], false);
-  const rotatedOnce = rotateMatrix(parts[3]);
-  const downRight = rotateMatrix(rotatedOnce);
+  const downRight = rotateMatrix(rotateMatrix(parts[3]));
   
   const top = joinChunksHorizontally(upLeft, upRight);
   const bottom = joinChunksHorizontally(downLeft, downRight);
