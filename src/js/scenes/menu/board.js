@@ -1,4 +1,5 @@
 import { displayInfo } from "../system/display-info";
+import Sandclock from "./sandclock";
 
 export default class Board extends Phaser.GameObjects.Container {
     constructor(scene, config) {
@@ -18,6 +19,11 @@ export default class Board extends Phaser.GameObjects.Container {
       const boardCenter = this.boardCenter = this.scene.add.sprite(0, 0, 'bg_atlas', 'board_center.png');
       boardCenter.setOrigin(0.5, 0.5);
       this.add(boardCenter);
+
+      this.sandclock = new Sandclock(scene);
+      this.sandclock.setScale(0.45);
+      this.sandclock.setPosition(32, -2);
+      this.add(this.sandclock);
   
       this.createTiles();
       this.createBorders();
