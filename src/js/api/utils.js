@@ -147,6 +147,22 @@ class Utils {
     parent.add(txt);
     return txt;
   }
+
+  static bitTest(word, mask){
+    return (word & mask) != 0;
+  }
+  
+  static bitSet(word, mask){
+    return word |= mask;
+  }
+  
+  static bitClear(word, mask){
+    return word &= ~mask;
+  }
+  
+  static bitToggle(word, mask){
+    return word ^= mask;
+  }
 }
 
 Utils.STATIC_CONSTANT = 1;

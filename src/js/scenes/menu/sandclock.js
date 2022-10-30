@@ -20,7 +20,7 @@ export default class Sandclock extends Phaser.GameObjects.Container {
         ellipseTop.setOrigin(0.5, 0.5);
         this.add(ellipseTop);
 
-        squareTop.setScale(0.95, 1);
+        squareTop.setScale(0.97, 1);
         triangleTop.setPosition(0, -10);
         squareTop.setPosition(-1, triangleTop.y - triangleTop.displayHeight + 4);
         ellipseTop.setPosition(0, squareTop.y - squareTop.displayHeight);
@@ -41,7 +41,7 @@ export default class Sandclock extends Phaser.GameObjects.Container {
         triangleBottom.setOrigin(0.5, 0.9);
         this.add(triangleBottom);
 
-        squareBottom.setScale(0.95, 1);
+        squareBottom.setScale(0.97, 1);
         triangleBottom.setPosition(0, 105);
         squareBottom.setPosition(-1, 105);
         ellipseBottom.setPosition(0, 105);

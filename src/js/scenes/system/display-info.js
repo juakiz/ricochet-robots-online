@@ -1,7 +1,3 @@
-import { board } from "./rules";
-const binaryBoard = board.map(el=>parseInt(el.toString(2)))
-console.log(binaryBoard);
-
 
 export const displayInfo = {
   // BOARD_SETUP: [
@@ -24,6 +20,11 @@ export const displayInfo = {
   // ],
   BOARD_PADDING: 12,
   TILE_SIZE: 64,
+
+  BOARD_DIMENSIONS: {
+    x: 16,
+    y: 16,
+  },
 
   COLOR_DEFS: [
     'blue',
@@ -107,4 +108,11 @@ export const displayInfo = {
       [13, 0, 4],// WHITE
     ],
   },
+
+  BIT_ROT: [
+    Math.PI,
+    0,
+    Math.PI * 0.5,
+    -Math.PI * 0.5,
+  ],
 };

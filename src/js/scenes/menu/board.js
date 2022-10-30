@@ -1,6 +1,11 @@
 import { displayInfo } from "../system/display-info";
 import Sandclock from "./sandclock";
 
+import { board } from "../system/rules";
+import Utils from "../../api/utils";
+// const binaryBoard = board.map(el=>parseInt(el.toString(2)))
+console.log(board/* , binaryBoard */);
+
 export default class Board extends Phaser.GameObjects.Container {
     constructor(scene, config) {
       super(scene);
@@ -26,8 +31,10 @@ export default class Board extends Phaser.GameObjects.Container {
       this.add(this.sandclock);
   
       this.createTiles();
-      this.createBorders();
-      this.placeExampleSetup();
+      // this.createBorders();
+      // this.placeExampleSetup();
+      this.placeWalls(board.walls);
+      this.placeGems(board.gems);
     }
   
     createTiles() {
@@ -120,6 +127,63 @@ export default class Board extends Phaser.GameObjects.Container {
       this.scene.input.on('drag', this.onDrag, this);
       this.scene.input.on('dragend', this.onDrageEnd, this);
     }
+
+    placeWalls(wallsData) {
+      const halfBoardWidth = this.boardImg.displayWidth * 0.5,
+        halfBoardHeight = this.boardImg.displayHeight * 0.5,
+        halfTileSize = displayInfo.TILE_SIZE * 0.5;
+      let col, row, spr;
+      for (let i = 0; i < wallsData.length; i++) {
+        col = i % displayInfo.BOARD_DIMENSIONS.x, row = Math.floor(i / displayInfo.BOARD_DIMENSIONS.y);/* , rot = el[2]; */
+        // console.log('>>index: ' + i + ' word: ' + wallsData[i].toString(2) + ' col: ' + col + ' row: ' + row);
+        if (wallsData[i] != 0)
+          for (let n = 0; n < 4; n++) {
+            const isSet = Utils.bitTest(wallsData[i], 1 << n);
+            // console.log('bit test: word=' + wallsData[i] + ' n=' + n + ' result:' + isSet);
+            if (isSet) {
+              // console.log(wallsData[i], 1 << n, displayInfo.BIT_ROT[n])
+              spr = this.scene.add.sprite(0, 0, 'bg_atlas', 'slices/wall-i.png');
+              spr.setOrigin(0.5, 0.5);
+              spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
+              spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
+              spr.rotation = displayInfo.BIT_ROT[n];
+              this.add(spr);
+            }
+          }
+      }
+    }
+
+    placeGems(gemsData) {
+      const halfBoardWidth = this.boardImg.displayWidth * 0.5,
+        halfBoardHeight = this.boardImg.displayHeight * 0.5,
+        halfTileSize = displayInfo.TILE_SIZE * 0.5;
+        let el, col, row, color, form, spr;
+        for (let i = 0; i < gemsData.length; i++) {
+          el = gemsData[i];
+          col = el[0], row = el[1], color = el[2], form = el[3];
+  
+        spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/gem-${displayInfo.SHAPE_DEFS[form]}-${displayInfo.COLOR_DEFS[color]}.png`);
+        spr.setOrigin(0.5, 0.5);
+        spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
+        spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
+        this.add(spr);
+      }
+    }
+
+    // placeWalls(wallsData) {
+    //   for (let i = 0; i < 256; i++) {
+    //     col = i % 16, row = Math.floor(i / 16);/* , rot = el[2]; */
+  
+    //     if (wallsData[i] != 0) {
+    //       spr = this.scene.add.sprite(0, 0, 'bg_atlas', 'slices/wall-l.png');
+    //       spr.setOrigin(0.5, 0.5);
+    //       spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
+    //       spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
+    //       // spr.rotation = Math.PI * (rot / 2);
+    //       this.add(spr);
+    //     }
+    //   };
+    // }
   
     onDragStart(pointer, gameObject) {
       gameObject._dragStartPos.set(gameObject.x, gameObject.y);
