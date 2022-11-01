@@ -13,7 +13,7 @@ export const BOARD_CHUNKS = {
 				0b1001, 0b0000, 0b1010, 0b0001, 0b0000, 0b1000, 0b0000, 0b0000,
 				0b0001, 0b0000, 0b0000, 0b0000, 0b0110, 0b0001, 0b0000, 0b0000,
 				0b0001, 0b0000, 0b0000, 0b0000, 0b1000, 0b0000, 0b0000, 0b0100,
-				0b0001, 0b0000, 0b0000, 0b0000, 0b0000, 0b0000, 0b0010, 0b1001,
+				0b0001, 0b0000, 0b0000, 0b0000, 0b0000, 0b0000, 0b0010, 0b0000,
       ],
       GEMS: [
         [3, 2, 2, 2], // YELLOW, MOON
@@ -66,7 +66,7 @@ export const BOARD_CHUNKS = {
 				0b0001, 0b0000, 0b0010, 0b1001, 0b0000, 0b0000, 0b0000, 0b0000,
 				0b0001, 0b0000, 0b0000, 0b0000, 0b0000, 0b0000, 0b0000, 0b0000,
 				0b0001, 0b0000, 0b0000, 0b0000, 0b0000, 0b0000, 0b0110, 0b0001,
-				0b0011, 0b0101, 0b0000, 0b0000, 0b0000, 0b0000, 0b0000, 0b0000,
+				0b0011, 0b0101, 0b0000, 0b0000, 0b0000, 0b0000, 0b1000, 0b0000,
 				0b0001, 0b1000, 0b0000, 0b0000, 0b0100, 0b0000, 0b0000, 0b0000,
 				0b0101, 0b0000, 0b0000, 0b0000, 0b1010, 0b0001, 0b0000, 0b0100,
 				0b1001, 0b0000, 0b0000, 0b0000, 0b0000, 0b0000, 0b0010, 0b0000,
@@ -319,15 +319,13 @@ function rotateMatrix(matrix, clockwise = true) {
 function joinChunksHorizontally(chunk1, chunk2) {
 	let chunk = [];
 	for (let i = 0; i < chunk1.length; i += CHUNK_SIZE) {
+    // Update joints with wall data
+    if (Utils.bitTest(chunk1[i + CHUNK_SIZE - 1], 1 << 1))
+      chunk2[i] |= 1 << 0;
+    else if (Utils.bitTest(chunk2[i], 1 << 0))
+      chunk1[i + CHUNK_SIZE - 1] |= 1 << 1;
+
     chunk = chunk.concat(chunk1.slice(i, i + CHUNK_SIZE), chunk2.slice(i, i + CHUNK_SIZE));
-      // TODO: FIX THIS
-			// Update joints with wall data
-      if (Utils.bitTest(chunk1[i + CHUNK_SIZE - 1], 1 << 2))
-          chunk2[i] |= 1 << 3;
-          // Utils.bitSet(chunk2[i], 1 << 3);
-      else if (Utils.bitTest(chunk2[i], 1 << 3))
-          chunk1[i + CHUNK_SIZE - 1] |= 1 << 2;
-          // Utils.bitSet(chunk1[i + CHUNK_SIZE - 1], 1 << 2);
 	}
 	return chunk;
 }
@@ -335,16 +333,13 @@ function joinChunksHorizontally(chunk1, chunk2) {
 function joinChunksVertically(chunk1, chunk2) {
   const topChunk = chunk1.slice();
   const bottomChunk = chunk2.slice();
-  // TODO: FIX THIS
   // Update joints with wall data
   for (let i = 0; i < CHUNK_SIZE * 2; i++) {
     if (i === 7 || i === 8) continue;
-    else if (Utils.bitTest(topChunk[topChunk.length - (CHUNK_SIZE * 2 + i)], 1 << 1))
-      bottomChunk[i] |= 1 << 0;
-      // Utils.bitSet(bottomChunk[i], 1 << 0);
-    else if (Utils.bitTest(bottomChunk[i], 1 << 0))
-      topChunk[topChunk.length - (CHUNK_SIZE * 2 + i)] |= 1 << 1;
-      // Utils.bitSet(topChunk[topChunk.length - (CHUNK_SIZE * 2 + i)], 1 << 1);
+    else if (Utils.bitTest(topChunk[topChunk.length - CHUNK_SIZE * 2 + i], 1 << 2))
+      bottomChunk[i] |= 1 << 3;
+    else if (Utils.bitTest(bottomChunk[i], 1 << 3))
+      topChunk[topChunk.length - CHUNK_SIZE * 2 + i] |= 1 << 2;
   }
 	return topChunk.concat(bottomChunk);
 }
