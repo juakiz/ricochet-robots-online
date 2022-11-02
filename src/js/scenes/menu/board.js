@@ -33,8 +33,10 @@ export default class Board extends Phaser.GameObjects.Container {
       this.createTiles();
       // this.createBorders();
       // this.placeExampleSetup();
-      this.placeWalls(board.walls);
       this.placeGems(board.gems);
+      this.placeWalls(board.walls);
+
+      this.placePiecesRandomly();
     }
   
     createTiles() {
@@ -147,6 +149,7 @@ export default class Board extends Phaser.GameObjects.Container {
               spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
               spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
               spr.rotation = displayInfo.BIT_ROT[n];
+              spr.alpha = 0.75;
               this.add(spr);
             }
           }
@@ -157,10 +160,10 @@ export default class Board extends Phaser.GameObjects.Container {
       const halfBoardWidth = this.boardImg.displayWidth * 0.5,
         halfBoardHeight = this.boardImg.displayHeight * 0.5,
         halfTileSize = displayInfo.TILE_SIZE * 0.5;
-        let el, col, row, color, form, spr;
-        for (let i = 0; i < gemsData.length; i++) {
-          el = gemsData[i];
-          col = el[0], row = el[1], color = el[2], form = el[3];
+      let el, col, row, color, form, spr;
+      for (let i = 0; i < gemsData.length; i++) {
+        el = gemsData[i];
+        col = el[0], row = el[1], color = el[2], form = el[3];
   
         spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/gem-${displayInfo.SHAPE_DEFS[form]}-${displayInfo.COLOR_DEFS[color]}.png`);
         spr.setOrigin(0.5, 0.5);
@@ -170,20 +173,43 @@ export default class Board extends Phaser.GameObjects.Container {
       }
     }
 
-    // placeWalls(wallsData) {
-    //   for (let i = 0; i < 256; i++) {
-    //     col = i % 16, row = Math.floor(i / 16);/* , rot = el[2]; */
+    isMiddleTile(col, row) {
+      return (col === 7 || col === 8) && (row === 7 || row === 8);
+    }
+
+    isGemTile(col, row) {
+      return board.gems.some(gemData => gemData[0] === col && gemData[1] === row);
+    }
+
+    isEmptyTile(col, row) {
+      return !this.isMiddleTile(col, row) && !this.isGemTile(col, row);
+    }
+
+    placePiecesRandomly() {
+      const halfBoardWidth = this.boardImg.displayWidth * 0.5,
+        halfBoardHeight = this.boardImg.displayHeight * 0.5,
+        halfTileSize = displayInfo.TILE_SIZE * 0.5;
+      let spr, row, col;
+      for (let i = 0; i < 5; i++) {
+        do {
+          col = Math.floor(Math.random() * 16), row = Math.floor(Math.random() * 16);
+        } while (!this.isEmptyTile(col, row));
   
-    //     if (wallsData[i] != 0) {
-    //       spr = this.scene.add.sprite(0, 0, 'bg_atlas', 'slices/wall-l.png');
-    //       spr.setOrigin(0.5, 0.5);
-    //       spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
-    //       spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
-    //       // spr.rotation = Math.PI * (rot / 2);
-    //       this.add(spr);
-    //     }
-    //   };
-    // }
+        spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/piece-${displayInfo.COLOR_DEFS[i]}.png`).setInteractive();
+        spr.setOrigin(0.5, 0.65);
+        spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE - halfBoardWidth + halfTileSize;
+        spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE - halfBoardHeight + halfTileSize;
+        this.add(spr);
+  
+        this.scene.input.setDraggable(spr);
+        spr._dragStartPos = new Phaser.Math.Vector2();
+      }
+
+      this.scene.input.dragDistanceThreshold = 10;
+      this.scene.input.on('dragstart', this.onDragStart, this);
+      this.scene.input.on('drag', this.onDrag, this);
+      this.scene.input.on('dragend', this.onDrageEnd, this);
+    }
   
     onDragStart(pointer, gameObject) {
       gameObject._dragStartPos.set(gameObject.x, gameObject.y);
