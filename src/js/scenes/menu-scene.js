@@ -23,7 +23,7 @@ export default class MenuScene extends Phaser.Scene {
     this.cameras.resize(gameSize.width, gameSize.height);
 
     const scale = Math.min(gameSize.width / 1048, gameSize.height / 1048);
-    this.boardContainer.setPosition((1048 * 0.5 * scale), 1048 * 0.5 * scale)
+    this.boardContainer.setPosition(0, 0/* 1048 * 0.5 * scale, 1048 * 0.5 * scale */)
     this.boardContainer.setScale(scale);
 
     // this.menuMain.resize();
