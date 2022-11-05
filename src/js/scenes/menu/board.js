@@ -133,10 +133,11 @@ export default class Board extends Phaser.GameObjects.Container {
     }
 
     placePiecesRandomly() {
-      let spr, row, col;
+      let spr, coord, row, col;
       for (let i = 0; i < 5; i++) {
-        row = pieces[i][0];
-        col = pieces[i][1];
+        coord = rules.getCoordinates(pieces[i]);
+        row = coord[0];
+        col = coord[1];
 
         spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/piece-${displayInfo.COLOR_DEFS[i]}.png`).setInteractive();
         spr.setOrigin(0.5, 0.65);
