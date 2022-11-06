@@ -10,7 +10,6 @@ console.log(board/* , binaryBoard */, pieces);
 export default class Board extends Phaser.GameObjects.Container {
   constructor(scene, config) {
     super(scene);
-
     scene.add.existing(this);
 
     const boardImg = this.boardImg = this.scene.add.sprite(0, 0, 'board_background');
@@ -34,11 +33,16 @@ export default class Board extends Phaser.GameObjects.Container {
     this.sandclock.setPosition(this.halfBoardWidth + 32, this.halfBoardHeight - 2);
     this.add(this.sandclock);
 
+    this.chip = this.scene.add.sprite(this.halfBoardWidth - 24, this.halfBoardHeight - 32, 'bg_atlas', `slices/gem-${displayInfo.SHAPE_DEFS[0]}-${displayInfo.COLOR_DEFS[0]}.png`);
+    this.add(this.chip);
+    this.chip.visible = false;
+
     this.createTiles();
     this.placeGems(board.gems);
     this.placeWalls(board.walls);
 
-    this.placePieces();
+    this.pieces = this.placePieces();
+    this.lockPieces();
   }
 
   createTiles() {
@@ -106,6 +110,7 @@ export default class Board extends Phaser.GameObjects.Container {
   }
 
   placePieces() {
+    const piecesArr = [];
     let spr, coord, row, col;
     for (let i = 0; i < 5; i++) {
       coord = boardRules.getCoordinates(pieces[i]);
@@ -122,12 +127,16 @@ export default class Board extends Phaser.GameObjects.Container {
 
       this.scene.input.setDraggable(spr);
       spr._dragStartPos = new Phaser.Math.Vector2();
+
+      piecesArr.push(spr);
     }
 
     this.scene.input.dragDistanceThreshold = 10;
     this.scene.input.on('dragstart', this.onDragStart, this);
     this.scene.input.on('drag', this.onDrag, this);
     this.scene.input.on('dragend', this.onDrageEnd, this);
+
+    return piecesArr;
   }
 
   onDragStart(pointer, gameObject) {
@@ -145,12 +154,21 @@ export default class Board extends Phaser.GameObjects.Container {
     const targetSquare = this.getSquare(gameObject.x, gameObject.y);
     const targetIndex = this.getIndex(targetSquare.col, targetSquare.row);
     if (boardRules.isValidPosition(gameObject.colorIndex, targetIndex)) {
-      boardRules.movePiece(gameObject.colorIndex, targetIndex)
       gameObject.x = displayInfo.BOARD_PADDING + targetSquare.col * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
       gameObject.y = displayInfo.BOARD_PADDING + targetSquare.row * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
+      boardRules.movePiece(gameObject.colorIndex, targetIndex);
+      this.scene.events.emit('movePiece', boardRules.targetReached);
     } else {
       gameObject.setPosition(gameObject._dragStartPos.x, gameObject._dragStartPos.y);
     }
+  }
+
+  lockPieces() {
+    this.pieces.forEach(piece => piece.disableInteractive());
+  }
+
+  unlockPieces() {
+    this.pieces.forEach(piece => piece.setInteractive());
   }
 
   getSquare(x, y) {
@@ -162,5 +180,20 @@ export default class Board extends Phaser.GameObjects.Container {
 
   getIndex(col, row) {
     return 16 * row + col;
+  }
+
+  showChip(bool = true) {
+    const chipData = boardRules.getNextChip();
+    console.log({chipData});
+    if (chipData == null || !bool) {
+      boardRules.restart();
+      this.chip.visible = false;
+      return false;
+    } else {
+      this.chip.visible = true;
+      this.chip.setTexture('bg_atlas', `slices/gem-${displayInfo.SHAPE_DEFS[chipData[3]]}-${displayInfo.COLOR_DEFS[chipData[2]]}.png`);
+      boardRules.setTarget(this.getIndex(chipData[0], chipData[1]), chipData[2]);
+      return true;
+    }
   }
 }
