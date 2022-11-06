@@ -1,9 +1,9 @@
 import { displayInfo } from "../system/display-info";
 import Sandclock from "./sandclock";
 
-import rules from "../system/rules";
+import boardRules from "../system/board-rules";
 import Utils from "../../api/utils";
-const {board, pieces} = rules;
+const {board, pieces} = boardRules;
 // const binaryBoard = board.map(el=>parseInt(el.toString(2)))
 console.log(board/* , binaryBoard */, pieces);
 
@@ -18,29 +18,27 @@ export default class Board extends Phaser.GameObjects.Container {
     boardImg.alpha = 0.5
     this.add(boardImg);
 
-    const halfBoardWidth = this.boardImg.displayWidth * 0.5,
-    halfBoardHeight = this.boardImg.displayHeight * 0.5;
+    this.halfBoardWidth = this.boardImg.displayWidth * 0.5,
+    this.halfBoardHeight = this.boardImg.displayHeight * 0.5;
 
     const boardFull = this.boardFull = this.scene.add.sprite(displayInfo.BOARD_PADDING, displayInfo.BOARD_PADDING, 'board_full');
     boardFull.setOrigin(0, 0);
     this.add(boardFull);
 
-    const boardCenter = this.boardCenter = this.scene.add.sprite(halfBoardWidth, halfBoardHeight, 'bg_atlas', 'board_center.png');
+    const boardCenter = this.boardCenter = this.scene.add.sprite(this.halfBoardWidth, this.halfBoardHeight, 'bg_atlas', 'board_center.png');
     boardCenter.setOrigin(0.5, 0.5);
     this.add(boardCenter);
 
     this.sandclock = new Sandclock(scene);
     this.sandclock.setScale(0.45);
-    this.sandclock.setPosition(halfBoardWidth + 32, halfBoardHeight - 2);
+    this.sandclock.setPosition(this.halfBoardWidth + 32, this.halfBoardHeight - 2);
     this.add(this.sandclock);
 
     this.createTiles();
-    // this.createBorders();
-    // this.placeExampleSetup();
     this.placeGems(board.gems);
     this.placeWalls(board.walls);
 
-    this.placePiecesRandomly();
+    this.placePieces();
   }
 
   createTiles() {
@@ -58,31 +56,6 @@ export default class Board extends Phaser.GameObjects.Container {
     }
   }
 
-  createBorders() {
-    let spr, row, col;
-    for (let i = 0; i < 256; i++) {
-
-      col = i % 16, row = Math.floor(i / 16);
-      if (col === 0 || col === 15) {
-        spr = this.scene.add.sprite(0, 0, 'bg_atlas', 'slices/wall-i.png');
-        spr.setOrigin(0.5, 0.5);
-        spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
-        spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
-        spr.rotation = col === 0 ? Math.PI : Math.PI * 2;
-        this.add(spr);
-      }
-      if (row === 0 || row === 15) {
-        spr = this.scene.add.sprite(0, 0, 'bg_atlas', 'slices/wall-i.png');
-        spr.setOrigin(0.5, 0.5);
-        spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
-        spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
-        spr.rotation = row === 0 ? Math.PI * 1.5 : Math.PI * 0.5;
-        this.add(spr);
-      }
-    }
-  }
-
-
   placeWalls(wallsData) {
     let col, row, spr;
     for (let i = 0; i < wallsData.length; i++) {
@@ -99,7 +72,6 @@ export default class Board extends Phaser.GameObjects.Container {
             spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
             spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
             spr.rotation = displayInfo.BIT_ROT[n];
-            spr.alpha = 0.75;
             this.add(spr);
           }
         }
@@ -114,6 +86,7 @@ export default class Board extends Phaser.GameObjects.Container {
 
       spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/gem-${displayInfo.SHAPE_DEFS[form]}-${displayInfo.COLOR_DEFS[color]}.png`);
       spr.setOrigin(0.5, 0.5);
+      spr.setScale(1.1)
       spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
       spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
       this.add(spr);
@@ -132,10 +105,10 @@ export default class Board extends Phaser.GameObjects.Container {
     return !this.isMiddleTile(col, row) && !this.isGemTile(col, row);
   }
 
-  placePiecesRandomly() {
+  placePieces() {
     let spr, coord, row, col;
     for (let i = 0; i < 5; i++) {
-      coord = rules.getCoordinates(pieces[i]);
+      coord = boardRules.getCoordinates(pieces[i]);
       row = coord[0];
       col = coord[1];
 
@@ -171,8 +144,8 @@ export default class Board extends Phaser.GameObjects.Container {
     gameObject.setScale(1);
     const targetSquare = this.getSquare(gameObject.x, gameObject.y);
     const targetIndex = this.getIndex(targetSquare.col, targetSquare.row);
-    if (rules.isValidPosition(gameObject.colorIndex, targetIndex)) {
-      rules.movePiece(gameObject.colorIndex, targetIndex)
+    if (boardRules.isValidPosition(gameObject.colorIndex, targetIndex)) {
+      boardRules.movePiece(gameObject.colorIndex, targetIndex)
       gameObject.x = displayInfo.BOARD_PADDING + targetSquare.col * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
       gameObject.y = displayInfo.BOARD_PADDING + targetSquare.row * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
     } else {

@@ -51,11 +51,24 @@ export default class Sandclock extends Phaser.GameObjects.Container {
         triangleBottom.setScale(0);
         ellipseBottom.setScale(0);
 
-      this.start();
+        this.running = false;
+        this.visible = false;
+        // this.start();
     }
 
-    start() {
-        const firstDuration = 60000;
+    show(bool = true) {
+        this.visible = bool;
+    }
+
+    start(duration = 60000, onCompleteCb, onCompleteCtx, ...args) {
+        if (this.running) {
+            console.warn('Finish one timer before start next.')
+            return;
+        }
+        this.running = true;
+        this.show();
+
+        const firstDuration = duration * (0.9 + Math.random() * 0.2)
         const secondDuration = firstDuration * 0.15;
         const thirdDuration = 200;
         const totalDuration = firstDuration + secondDuration;
@@ -132,11 +145,20 @@ export default class Sandclock extends Phaser.GameObjects.Container {
         bottomTriangleTimeline.play();
         bottomSquareTimeline.play();
 
-        var timer = this.scene.time.addEvent({
-            delay: totalDuration * 1.1,
-            callback: this.start,
-            callbackScope: this,
-            loop: true
-        });
+        this.onCompleteEvent = this.scene.time.delayedCall(totalDuration + 500, () => {
+            this.running = false;
+            onCompleteCb.call(onCompleteCtx, ...args);
+        }, null, this);
+    }
+
+    stop() {
+        this.running = false;
+        this.onCompleteEvent.remove(false);
+
+        this.iterate(children => {
+            this.scene.tweens.getTweensOf(children).forEach(tween => {
+                tween.stop();
+            });
+        })
     }
 }

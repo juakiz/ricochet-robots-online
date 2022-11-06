@@ -12,6 +12,7 @@ const MASK_MAP = {
 class Rules {
     constructor() {
         this.board = getBoard([BOARD_CHUNKS.BLUE[0], BOARD_CHUNKS.GREEN[0], BOARD_CHUNKS.YELLOW[0], BOARD_CHUNKS.RED[0]]);
+        this.chips = this.board.gems.slice();
         this.pieces = [
             0, // 'blue',
             17, // 'green',
@@ -20,6 +21,8 @@ class Rules {
             4, // 'silver',
         ];
         this.pieces.forEach(index => this.board.walls[index] |= MASK_MAP.P);
+
+        this.randomizePiecesPosition();
     }
 
     randomizePiecesPosition() {
