@@ -40,11 +40,11 @@ export default class MenuScene extends Phaser.Scene {
     title.setInteractive();
     title.on('pointerdown', this.gotTeSolution, this);
 
-    this.startButton = Utils.centeredText(this.boardContainer, {x: this.boardContainer.halfBoardWidth, y: this.boardContainer.halfBoardHeight, text: 'Start', size: '16px'});
+    this.startButton = Utils.centeredText(this.boardContainer, {x: this.boardContainer.halfBoardWidth, y: this.boardContainer.halfBoardHeight, text: 'Start', size: '14px'});
     this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startSinglePlayerGame, this);
 
-    this.nextButton = Utils.centeredText(this.boardContainer, {x: this.boardContainer.halfBoardWidth, y: this.boardContainer.halfBoardHeight, text: 'Test', size: '16px'});
+    this.nextButton = Utils.centeredText(this.boardContainer, {x: this.boardContainer.halfBoardWidth, y: this.boardContainer.halfBoardHeight, text: 'Test', size: '14px'});
     this.nextButton.setInteractive();
     this.nextButton.on('pointerdown', this.nextRound, this);
     this.nextButton.visible = false;
@@ -94,7 +94,7 @@ export default class MenuScene extends Phaser.Scene {
     this.counterText.visible = false;
     this.nextButton.visible = true;
     this.score++;
-    this.nextButton.text = 'Got the\nsolution!\n[Next]';
+    this.nextButton.text = 'You got the\nsolution!\n[Next]';
     this.boardContainer.sandclock.stop();
     this.boardContainer.sandclock.visible = false;
     this.boardContainer.chip.visible = false;

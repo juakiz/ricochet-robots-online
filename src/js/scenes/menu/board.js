@@ -41,7 +41,7 @@ export default class Board extends Phaser.GameObjects.Container {
     this.placeGems(board.gems);
     this.placeWalls(board.walls);
 
-    this.pieces = this.placePieces();
+    this.pieces = this.createPieces();
     this.lockPieces();
   }
 
@@ -109,7 +109,7 @@ export default class Board extends Phaser.GameObjects.Container {
     return !this.isMiddleTile(col, row) && !this.isGemTile(col, row);
   }
 
-  placePieces() {
+  createPieces() {
     const piecesArr = [];
     let spr, coord, row, col;
     for (let i = 0; i < 5; i++) {
@@ -137,6 +137,18 @@ export default class Board extends Phaser.GameObjects.Container {
     this.scene.input.on('dragend', this.onDrageEnd, this);
 
     return piecesArr;
+  }
+
+  placePieces() {
+    let coord, row, col;
+    for (let i = 0; i < 5; i++) {
+      coord = boardRules.getCoordinates(pieces[i]);
+      row = coord[0];
+      col = coord[1];
+
+      this.pieces[i].setPosition(displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5,
+        displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5)
+    }
   }
 
   onDragStart(pointer, gameObject) {
@@ -184,9 +196,9 @@ export default class Board extends Phaser.GameObjects.Container {
 
   showChip(bool = true) {
     const chipData = boardRules.getNextChip();
-    console.log({chipData});
     if (chipData == null || !bool) {
       boardRules.restart();
+      this.placePieces();
       this.chip.visible = false;
       return false;
     } else {

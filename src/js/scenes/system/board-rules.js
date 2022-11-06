@@ -31,10 +31,10 @@ class Rules {
 
     restart() {
         this.chips = this.board.gems.slice().sort((a, b) => 0.5 - Math.random());
+        this.randomizePiecesPosition();
         this.targetTile = null;
         this.targetColor = null;
         this.targetReached = false;
-        this.randomizePiecesPosition();
     }
 
     randomizePiecesPosition() {
