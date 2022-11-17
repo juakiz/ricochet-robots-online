@@ -182,4 +182,8 @@ Utils.STATIC_CONSTANT = 1;
   return Math.min(Math.max(this, min), max);
 };
 
+Array.prototype.rndEl = function() {
+  return this[Math.floor(Math.random() * this.length)];
+};
+
 export default Utils;

@@ -11,7 +11,8 @@ const MASK_MAP = {
 
 class Rules {
     constructor() {
-        this.board = getBoard([BOARD_CHUNKS.BLUE[0], BOARD_CHUNKS.GREEN[0], BOARD_CHUNKS.YELLOW[0], BOARD_CHUNKS.RED[0]]);
+        const chunks = [BOARD_CHUNKS.BLUE.rndEl(), BOARD_CHUNKS.GREEN.rndEl(), BOARD_CHUNKS.YELLOW.rndEl(), BOARD_CHUNKS.RED.rndEl()].sort((a, b) => 0.5 - Math.random());
+        this.board = getBoard(chunks);
         this.chips = this.board.gems.slice().sort((a, b) => 0.5 - Math.random());
         this.pieces = [
             0, // 'blue',
