@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 import CustomFonts from '../../css/fonts.css';
 
@@ -39,11 +39,11 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // Connection to Server
     const authToken = '_' + Math.random().toString(36).substr(2, 9); // (random ID number atm)
-    const socket = io();
+    // const socket = io();
 
-    socket.on('connect', () => {
-      socket.emit('user-auth', { id: authToken });
-    });
+    // socket.on('connect', () => {
+    //   socket.emit('user-auth', { id: authToken });
+    // });
 
     // On Load Complete event
     const scene = this;
@@ -75,7 +75,7 @@ export default class PreloaderScene extends Phaser.Scene {
         progress.destroy();
         txt.destroy();
         // scene.scale.startFullscreen();
-        this.scene.start('MenuScene', { socket });
+        this.scene.start('MenuScene'/* , { socket } */);
       });
     });
 
