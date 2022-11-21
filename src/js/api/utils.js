@@ -13,10 +13,8 @@ class Utils {
     return s;
   }
 
-  static ninePatchStretch(parent, width, height, parts, config) {
-    const { scene } = parent;
+  static ninePatchStretch(scene, width, height, parts, config) {
     const grp = scene.add.container();
-    parent.add(grp);
 
     const imgs = parts.map((el, i) => {
       const img = scene.add.image(0, 0, config.atlas || el, el);

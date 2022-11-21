@@ -13,7 +13,7 @@ const ratio = window.innerWidth / gameHeight;
 // console.log(window.innerWidth, window.innerHeight);
 
 const config = {
-  backgroundColor: '#202020',
+  backgroundColor: '#eeeeee',
   type: Phaser.AUTO,
   parent: 'phaser-example',
   // width: window.innerWidth,

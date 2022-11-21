@@ -17,12 +17,12 @@ export default class MenuScene extends Phaser.Scene {
 
     const title = this.make.text({
       x:  this.boardContainer.boardImg.displayWidth + 40,
-      y: 80,
+      y: 100,
       text: 'Ricochet\nRobots\nOnline',
       style: {
         fontSize: '64px',
         fontFamily: `"Imbalanced Cap"`,
-        color: '#ffffff',
+        color: '#656565',
         align: 'left',
         lineSpacing: -15,
         padding: {
@@ -124,7 +124,26 @@ export default class MenuScene extends Phaser.Scene {
     this.boardContainer.setPosition(0, 0/* 1048 * 0.5 * scale, 1048 * 0.5 * scale */)
     this.boardContainer.setScale(scale);
 
+    const bcSize = 1048 * scale;
+
+    if (this.panel)
+      this.panel.destroy();
+    this.panel = this.createNinePatch(gameSize.width - bcSize, gameSize.height);
+    this.panel.x = bcSize + (gameSize.width - bcSize) * 0.5;
+    this.panel.y = bcSize * 0.5;
+    this.panel.setDepth(-1);
+
     // this.menuMain.resize();
+  }
+  
+  createNinePatch(width, height) {
+    return Utils.ninePatchStretch(
+        this,
+        width,
+        height,
+        ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png'],
+        {atlas: 'bg_atlas'}
+      );
   }
 
   update() {
