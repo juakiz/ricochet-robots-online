@@ -4,8 +4,9 @@ import InputTextPlugin from './js/plugins/rexinputtextplugin';
 
 if (module.hot) module.hot.accept(); // accept Webpack's Hot Module Replacement
 
-import Preloader from './js/scenes/preloader-scene';
-import Menu from './js/scenes/menu-scene';
+import PreloaderScene from './js/scenes/preloader-scene';
+import MainScene from './js/scenes/main-scene';
+import MenuScene from './js/scenes/menu-scene';
 
 const gameHeight = 640;
 
@@ -33,9 +34,9 @@ const config = {
   },
   pixelArt: false,//true,
   scene: [
-    Preloader,
-    Menu,
-    // Battle,
+    PreloaderScene,
+    MainScene,
+    MenuScene,
   ],
   plugins: {
     global: [

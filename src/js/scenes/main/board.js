@@ -90,7 +90,9 @@ export default class Board extends Phaser.GameObjects.Container {
 
       spr = this.scene.add.sprite(0, 0, 'bg_atlas', `slices/gem-${displayInfo.SHAPE_DEFS[form]}-${displayInfo.COLOR_DEFS[color]}.png`);
       spr.setOrigin(0.5, 0.5);
-      spr.setScale(1.1)
+      spr.setScale(1.1);
+      spr.alpha = 0.75;
+      spr.tint = 0xCCCCCC;
       spr.x = displayInfo.BOARD_PADDING + col * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
       spr.y = displayInfo.BOARD_PADDING + row * displayInfo.TILE_SIZE + displayInfo.TILE_SIZE * 0.5;
       this.add(spr);

@@ -69,14 +69,15 @@ export default class PreloaderScene extends Phaser.Scene {
 
       // this.add(txt);
 
-      // this.scene.start('MenuScene', { socket });
+      // this.scene.start('MainScene', { socket });
 
-      this.input.on('pointerdown', () => {
+      // this.input.on('pointerdown', () => {
         progress.destroy();
         txt.destroy();
         // scene.scale.startFullscreen();
-        this.scene.start('MenuScene'/* , { socket } */);
-      });
+        this.scene.start('MainScene'/* , { socket } */);
+        this.scene.start('MenuScene');
+      // });
     });
 
     this.registry.set('myID', authToken);
